@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Koshiki</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="animelist_nav_menu.anime_catalog">Каталог аниме</string>
+    <string name="animelist_nav_menu.manga_catalog">Каталог манги</string>
+    <string name="animelist_nav_menu.calendar">Календарь онгоингов</string>
+    <string name="animelist_nav_view.news_and_discuss">Новости и обсуждения</string>
+    <string name="animelist_nav_view.social">Сообщество</string>
+
+    <string name="animelist_nav_menu_header.status_online">онлайн</string>
+
+</resources>

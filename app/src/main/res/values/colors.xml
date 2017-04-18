@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="blue_grey_700">#455A64</color>
+
+    <color name="grey_500">#9e9e9e</color>
+    <color name="grey_700">#616161</color>
+    <color name="grey_800">#424242</color>
+
+    <!-- Цвета status -->
+    <color name="light_green_200">#C5E1A5</color>
+    <color name="green_900">#1B5E20</color>
+
+    <color name="orange_200">#FFCC80</color>
+    <color name="deep_orange_900">#BF360C</color>
+
+    <color name="brown_100">#D7CCC8</color>
+    <color name="grey_900">#212121</color>
+    
+    <color name="light_blue_100">#B3E5FC</color>
+    <color name="cyan_900">#006064</color>
+</resources>

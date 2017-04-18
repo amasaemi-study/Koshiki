@@ -1,0 +1,41 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <style name="anime_list_item_cardview_text_view_value">
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <!-- Стиль для статуса, жанров и тп -->
+    <style name="backgrounded_text_view">
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">@dimen/padding_6dp</item>
+        <item name="android:paddingRight">@dimen/padding_6dp</item>
+        <item name="android:paddingTop">@dimen/padding_2dp</item>
+        <item name="android:paddingBottom">@dimen/padding_2dp</item>
+        <item name="android:textStyle">bold</item>
+        <!-- В дальнейшем отказаться от поддержки API 15 и убрать targetApi -->
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
+    </style>
+
+    <style name="selectable_item">
+        <item name="android:background">?android:selectableItemBackground</item>
+    </style>
+
+</resources>

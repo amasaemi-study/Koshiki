@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_view.anime_catalog"
+            android:title="@string/animelist_nav_menu.anime_catalog"
+            android:checked="true"
+            android:icon="@drawable/icon_anime_catalog"/>
+
+        <item
+            android:id="@+id/nav_view.manga_catalog"
+            android:title="@string/animelist_nav_menu.manga_catalog"
+            android:icon="@drawable/icon_manga_catalog"/>
+
+        <item
+            android:id="@+id/nav_view.calendar"
+            android:title="@string/animelist_nav_menu.calendar"
+            android:icon="@drawable/icon_calendar"/>
+
+        <item
+            android:id="@+id/nav_view.news"
+            android:title="@string/animelist_nav_view.news_and_discuss"
+            android:icon="@drawable/icon_discuss"/>
+
+        <item
+            android:id="@+id/nav_view.social"
+            android:title="@string/animelist_nav_view.social"
+            android:icon="@drawable/icon_social"/>
+
+    </group>
+
+    <!--<item android:title="Профиль">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_view.anime_liked"
+                    android:title="Избранное"
+                    android:icon="@drawable/menu_nav_view_liked"/>
+
+                <item
+                    android:id="@+id/nav_view.anime_my_list"
+                    android:title="Мой список"
+                    android:icon="@drawable/menu_nav_view_my_list"/>
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="Приложение">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_view.anime_settings"
+                    android:title="Настройки"
+                    android:icon="@drawable/menu_nav_view_settings"/>
+
+                <item
+                    android:id="@+id/nav_view.anime_about"
+                    android:title="О приложении"
+                    android:icon="@drawable/menu_nav_view_about"/>
+            </group>
+
+        </menu>
+    </item>-->
+</menu>
