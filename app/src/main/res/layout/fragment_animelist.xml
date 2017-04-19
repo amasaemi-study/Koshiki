@@ -1,12 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="match_parent">
 
+    <!-- Метка о пустом списке. Посмотреть на поведение,
+     если при полном списке надпись видна - использовать visibility-->
+    <TextView
+        android:id="@+id/animelist_fragment.empty_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Список элементов пуст"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif-condensed"
+        android:textColor="@color/grey_400"/>
+
+    <!-- Список с аниме -->
+    <!-- marginBottom = 1 - отступ для разделителя -->
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/vRecyclerView"
+        android:id="@+id/animelist_fragment.recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/margin_1dp"
+        android:layout_below="@+id/animelist_fragment.open_layout"/>
 
+    <!-- В лайоуте подключаем плашку с настройками поиска -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/animelist_fragment.open_layout">
+
+        <include layout="@layout/fragment_animelist_parameters"/>
+    </RelativeLayout>
+
+    <!-- Лайоут для открытия и закрытия плашки с настройками поиска -->
+    <FrameLayout
+        android:id="@+id/animelist_fragment.open_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_16dp"
+        android:background="?android:selectableItemBackground">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/grey_800"
+            android:text="Параметры поиска"/>
+
+        <!-- При открытии иконка должна анимироваться (переворачиваться вверх) -->
+        <ImageView
+            android:id="@+id/animelist_fragment.icon_expanded_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:src="@drawable/icon_expand_more" />
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey_200"
+        android:layout_below="@id/animelist_fragment.open_layout"/>
 </RelativeLayout>

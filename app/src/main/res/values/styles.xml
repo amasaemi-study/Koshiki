@@ -38,4 +38,14 @@
         <item name="android:background">?android:selectableItemBackground</item>
     </style>
 
+    <!-- Стиль для кнопок в плашке с поиском
+    <style name="searchingTextViewStyle">
+        <item name="android:paddingLeft">@dimen/padding_8dp</item>
+        <item name="android:maxWidth">@dimen/size_250dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:background">?selectableItemBackground</item>
+        <item name="android:gravity">center</item>
+        <item name="android:drawableRight">@drawable/icon_dropdown</item>
+    </style>-->
 </resources>

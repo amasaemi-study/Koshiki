@@ -30,17 +30,17 @@ class AnimeListAdapter(context: Context) : RecyclerView.Adapter<AnimeViewHolder>
         mEndListListener = listener
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): AnimeViewHolder {
-        val view = LayoutInflater.from(parent!!.context).inflate(R.layout.cardview_animelist_item, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimeViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.cardview_animelist_item, parent, false)
         return AnimeViewHolder(parent.context, view)
     }
 
-    override fun onBindViewHolder(holder: AnimeViewHolder?, position: Int) {
-        holder!!.card.animeNameRu.text = mList!!.get(position).animeNameRu
-        holder.card.animeNameEn.text = mList.get(position).animeNameEn
-        holder.card.animeKind.text = mList.get(position).animeKind
-        holder.card.animeSeason.text = mList.get(position).animeSeason
-        holder.card.animeEpisodes.text = mList.get(position).animeEpisodes
+    override fun onBindViewHolder(holder: AnimeViewHolder, position: Int) {
+        holder.card.animeNameRu.text = mList!!.get(position).animeNameRu
+        holder.card.animeNameEn.text = mList[position].animeNameEn
+        holder.card.animeKind.text = mList[position].animeKind
+        holder.card.animeSeason.text = mList[position].animeSeason
+        holder.card.animeEpisodes.text = mList[position].animeEpisodes
 
         // TODO 18.04.2017 добавить подгрузку глайдом holder.card.animeImage
 
@@ -49,7 +49,7 @@ class AnimeListAdapter(context: Context) : RecyclerView.Adapter<AnimeViewHolder>
 
         // проверяем на конце списка recyclerView
         if (mEndListChecker && (position == getItemCount() - 1)) {
-            mEndListListener!!.onEndList()
+            mEndListListener?.onEndList()
             mEndListChecker = false
         }
     }

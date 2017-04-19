@@ -8,7 +8,7 @@
     android:paddingTop="@dimen/size_24dp">
 
     <ImageView
-        android:id="@+id/headerAvatar"
+        android:id="@+id/nav_menu_header.avatar"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:scaleType="centerCrop"
@@ -16,7 +16,7 @@
         android:layout_margin="16dp"/>
 
     <TextView
-        android:id="@+id/headerUsername"
+        android:id="@+id/nav_menu_header.username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Amasaemi"

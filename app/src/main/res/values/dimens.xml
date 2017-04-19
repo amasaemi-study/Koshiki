@@ -10,4 +10,9 @@
     <dimen name="padding_2dp">2dp</dimen>
     <dimen name="padding_6dp">6dp</dimen>
     <dimen name="size_24dp">24dp</dimen>
+    <dimen name="size_250dp">250dp</dimen>
+    <dimen name="padding_16dp">16dp</dimen>
+    <dimen name="margin_1dp">1dp</dimen>
+    <dimen name="height_320dp">320dp</dimen>
+    <dimen name="parameters_layout_height_350dp">360dp</dimen>
 </resources>

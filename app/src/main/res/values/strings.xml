@@ -12,4 +12,12 @@
 
     <string name="animelist_nav_menu_header.status_online">онлайн</string>
 
+    <string name="animelist_finding_paramaters.status">Выберите статус аниме</string>
+    <string name="animelist_finding_paramaters.kind">Выберите тип аниме</string>
+    <string name="animelist_finding_paramaters.age_rating">Выберите возрастной рейтинг</string>
+    <string name="animelist_finding_paramaters.season">Выберите сезон выхода аниме</string>
+    <string name="animelist_finding_paramaters.stat_my_list">Выберите статус в вашем списке</string>
+    <string name="animelist_finding_paramaters.genres">Выберите жанры для поиска</string>
+    <string name="animelist_finding_paramaters.sort">Выберите сортировку</string>
+
 </resources>
