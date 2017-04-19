@@ -35,6 +35,7 @@
     </RelativeLayout>
 
     <!-- Лайоут для открытия и закрытия плашки с настройками поиска -->
+    <!-- В дальнейшем, возможно, заменить background на grey_100-200 -->
     <FrameLayout
         android:id="@+id/animelist_fragment.open_layout"
         android:layout_width="match_parent"

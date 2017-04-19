@@ -13,7 +13,10 @@ import org.shikimori.koshiki.ui.customviews.SearchingBar
  */
 object AnimeListFragment : BaseFragment() {
 
+    // tags
     val TAG = "AnimeListFragment"
+
+    var mSearchingBar: SearchingBar? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
@@ -24,18 +27,29 @@ object AnimeListFragment : BaseFragment() {
         // настраиваем title у toolbar
         activity.title = getString(R.string.animelist_nav_menu_anime_catalog)
 
-        initFindBar(view!!)
+        initFindBar(view)
     }
 
     /**
      * Метод инициализирует плашку с настройками поиска
      */
     private fun initFindBar(rootView: View) {
-        // todo
-        SearchingBar(activity, rootView)
+        mSearchingBar = SearchingBar(activity, rootView)
+    }
+
+    /**
+     * Метод инициализирует меню для поиска по названию
+     */
+    private fun initSearchBar() {
+
     }
 
     override fun onBackPressed(): Boolean {
-        return super.onBackPressed()
+        if (mSearchingBar!!.isVisible()) {
+            mSearchingBar!!.changeFindBarVisibilityState()
+            return false
+        }
+
+        return true
     }
 }

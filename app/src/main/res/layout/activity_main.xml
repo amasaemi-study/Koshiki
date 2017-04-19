@@ -50,7 +50,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="left"
         android:fitsSystemWindows="true"
-        app:menu="@menu/animelist_nav_menu"
+        app:menu="@menu/menu_animelist_nav"
         app:headerLayout="@layout/animelist_nav_menu_header"
         app:itemIconTint="@color/blue_grey_700"
         app:itemTextColor="@color/grey_800"/>

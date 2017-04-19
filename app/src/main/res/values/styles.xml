@@ -48,4 +48,5 @@
         <item name="android:gravity">center</item>
         <item name="android:drawableRight">@drawable/icon_dropdown</item>
     </style>-->
+
 </resources>
