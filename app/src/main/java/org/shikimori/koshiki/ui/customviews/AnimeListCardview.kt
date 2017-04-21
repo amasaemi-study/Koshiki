@@ -8,6 +8,7 @@ import android.widget.TextView
 import org.shikimori.koshiki.R
 
 import org.shikimori.koshiki.utils.ConstantManager
+import org.shikimori.koshiki.utils.ValueParser
 
 import java.net.URL
 
@@ -17,51 +18,54 @@ import java.net.URL
 
 class AnimeListCardview(mContext: Context) {
     private val TAG = "AnimeListCardview"
+    private val parser: ValueParser
 
     // id аниме. По умолчанию - 0, в этом случае сервер вернет 404
-    var id: Int = 0
+    private var id: Int = 0
 
     // TODO 18.04.2017 проверить работоспособность = View(context). Если нет, переписать на findById
     // сама карточка. Для нее обрабатывать onClick
-    val animeCardview = CardView(mContext)
+    private val animeCardview = CardView(mContext)
 
     // основной layout. Скрывать до загрузки данных
     // unactual
     // val visibilityLayout = LinearLayout(mContext)
 
     // постер
-    val animePoster = ImageView(mContext)
+    private val animePoster = ImageView(mContext)
 
     // название аниме на русском. Если название на русском отсутствует - писать на англ
-    val animeNameRu = TextView(mContext)
+    private val animeNameRu = TextView(mContext)
 
     // название аниме на английском (транслитом)
-    val animeNameEn = TextView(mContext)
+    private val animeNameEn = TextView(mContext)
 
     // тип аниме (tv, ova, etc)
-    val animeKind = TextView(mContext)
+    private val animeKind = TextView(mContext)
 
     // аниме сезон (Зима 2015 и тд)
-    val animeSeason = TextView(mContext)
+    private val animeSeason = TextView(mContext)
 
     // количество эпизодов (если онгоинг -> вышло серий / всего серий; иначе вышло серий)
-    val animeEpisodes = TextView(mContext)
+    private  val animeEpisodes = TextView(mContext)
 
     // аниме статус (ongoing, anons, released)
-    val animeStatus = TextView(mContext)
+    private val animeStatus = TextView(mContext)
 
     // меню для добавления аниме в избранное и назначения статуса просмотренного
-    val cardviewMenu = ImageView(mContext)
+    private val cardviewMenu = ImageView(mContext)
 
     init {
         setCardviewMenu()
         setPosterLayoutParams(mContext)
+
+        parser = ValueParser()
     }
 
     /**
      * Метод инициализирует карточку
      */
-    public fun initCard(id: Int,
+    /*fun initCard(id: Int,
                         posterUrl: String,
                         animeNameRu: String,
                         animeNameEn: String,
@@ -80,13 +84,60 @@ class AnimeListCardview(mContext: Context) {
         // this.animeStatus.setText(animeStatus)
         // TODO 18.04.2017 подгрузить глайдом изображение в animePoster. Линк - posterUrl
         // TODO 18.04.2017 при неудачной загрузке изображения ставить дефолтную картинку
-    }
+    }*/
 
     /**
      * Метод настраивает обработчик нажатий на карточку
      */
-    public fun setOnCardClickListener(listener: View.OnClickListener) {
+    fun setOnCardClickListener(listener: View.OnClickListener) {
         animeCardview.setOnClickListener(listener)
+    }
+
+    /**
+     * Метод устанавливает картинку у постера
+     */
+    fun setPoster(posterUrl: String) {
+        // TODO 18.04.2017 подгрузить глайдом изображение в animePoster. Линк - posterUrl
+        // TODO 18.04.2017 при неудачной загрузке изображения ставить дефолтную картинку
+    }
+
+    /**
+     * Метод устанавливает id
+     */
+    fun setId(id: Int) {
+        this.id = id
+    }
+
+    /**
+     * Метод устанавливает русское и английское назания для аниме
+     */
+    fun setTitles(ruName: String, enName: String) {
+        initRuName(ruName, enName)
+    }
+
+    /**
+     * Метод устанавливает тип аниме
+     */
+    fun setKind(kind: Int) {
+        this.animeKind.text = parser.getKind(true, kind)
+    }
+
+    /**
+     * Метод устанавливает сезон выхода аниме
+     */
+    fun setSeason(season: String) {
+        this.animeSeason.text = parser.getSeason(season)
+    }
+
+    /**
+     * Метод устанавливает количество эпизодов
+     */
+    fun setEpisodes(episodes: String) {
+        this.animeEpisodes.text = episodes
+    }
+
+    fun setStatus(status: Int) {
+        initStatus(status)
     }
 
     /**
@@ -94,40 +145,40 @@ class AnimeListCardview(mContext: Context) {
      */
     private fun initRuName(ruName: String, enName: String) {
         if(ruName.equals(ConstantManager.EMPTY_VALUE))
-            animeNameRu.setText(enName)
+            this.animeNameRu.setText(enName)
         else {
-            animeNameRu.setText(ruName)
-            animeNameEn.setText(enName)
+            this.animeNameRu.setText(ruName)
+            this.animeNameEn.setText(enName)
         }
     }
 
     /**
      * Метод инициализирует и раскрашивает view и текст статуса
      */
-    private fun initStatus(status: String) {
+    private fun initStatus(status: Int) {
         when(status) {
-            "Анонс" -> {
-                animeStatus.text = status
-                animeStatus.setBackgroundColor(R.color.orange_200)
-                animeStatus.setTextColor(R.color.deep_orange_900)
+            0 -> {
+                this.animeStatus.text = parser.getStatus(true, status)
+                this.animeStatus.setBackgroundColor(R.color.orange_200)
+                this.animeStatus.setTextColor(R.color.deep_orange_900)
             }
 
-            "Онгоинг" -> {
-                animeStatus.text = status
-                animeStatus.setBackgroundColor(R.color.light_green_200)
-                animeStatus.setTextColor(R.color.green_900)
+            1 -> {
+                this.animeStatus.text = parser.getStatus(true, status)
+                this.animeStatus.setBackgroundColor(R.color.light_green_200)
+                this.animeStatus.setTextColor(R.color.green_900)
             }
 
-            "Вышло" -> {
-                animeStatus.text = status
-                animeStatus.setBackgroundColor(R.color.light_blue_100)
-                animeStatus.setTextColor(R.color.cyan_900)
+            2 -> {
+                this.animeStatus.text = parser.getStatus(true, status)
+                this.animeStatus.setBackgroundColor(R.color.light_blue_100)
+                this.animeStatus.setTextColor(R.color.cyan_900)
             }
 
             else -> {
-                animeStatus.text = status
-                animeStatus.setBackgroundColor(R.color.brown_100)
-                animeStatus.setTextColor(R.color.grey_900)
+                this.animeStatus.text = parser.getStatus(true, status)
+                this.animeStatus.setBackgroundColor(R.color.brown_100)
+                this.animeStatus.setTextColor(R.color.grey_900)
             }
         }
     }
@@ -143,6 +194,6 @@ class AnimeListCardview(mContext: Context) {
      * Метод настраивает ширину картинки
      */
     private fun setPosterLayoutParams(context: Context) {
-        animePoster.layoutParams.width = ((180 * context.resources.displayMetrics.density / 1.4).toInt())
+        this.animePoster.layoutParams.width = ((180 * context.resources.displayMetrics.density / 1.4).toInt())
     }
 }

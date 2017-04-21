@@ -53,6 +53,7 @@
             android:id="@+id/vSearchingKind$"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_1dp"
             android:fontFamily="sans-serif-medium"
             android:layout_above="@+id/animelist_parameters_find.searching_kind"
             android:text="Тип:"/>
@@ -76,6 +77,7 @@
             android:id="@+id/vSearchingAgeRating$"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_1dp"
             android:fontFamily="sans-serif-medium"
             android:layout_above="@+id/animelist_parameters_find.searching_age_rating"
             android:text="Возрастной рейтинг:"/>
@@ -99,6 +101,7 @@
             android:id="@+id/vSearchingSeason$"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
             android:fontFamily="sans-serif-medium"
             android:layout_above="@+id/animelist_parameters_find.searching_season"
             android:text="Сезон:"/>
@@ -122,6 +125,7 @@
             android:id="@+id/vSearchingMyList$"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_1dp"
             android:fontFamily="sans-serif-medium"
             android:layout_above="@+id/animelist_parameters_find.searching_my_list"
             android:text="В моем списке:"/>
@@ -145,6 +149,7 @@
             android:id="@+id/vSearchingGenres$"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_1dp"
             android:fontFamily="sans-serif-medium"
             android:layout_above="@+id/animelist_parameters_find.searching_genres"
             android:text="Жанры:"/>
@@ -168,6 +173,7 @@
             android:id="@+id/vSearchingSort$"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_1dp"
             android:fontFamily="sans-serif-medium"
             android:layout_above="@+id/animelist_parameters_find.searching_sort"
             android:text="Сортировака:"/>

@@ -5,7 +5,7 @@ import android.util.Log
 /**
  * Created by Александр on 18.04.2017.
  */
-data class AnimeListModel( val animeId: Int,
+data class _AnimeListModel(val animeId: Int,
                            val animeImageUrl: String,
                            val animeNameRu: String,
                            val animeNameEn: String,
@@ -13,7 +13,7 @@ data class AnimeListModel( val animeId: Int,
                            val animeSeason: String,
                            val animeEpisodes: String ) {
 
-    private val TAG = "AnimeListModel"
+    private val TAG = "_AnimeListModel"
 
     init {
         // TODO 18.04.2017 добавить valueParser
