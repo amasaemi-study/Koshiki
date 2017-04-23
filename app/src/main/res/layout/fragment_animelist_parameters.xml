@@ -175,11 +175,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_1dp"
             android:fontFamily="sans-serif-medium"
-            android:layout_above="@+id/animelist_parameters_find.searching_sort"
+            android:layout_above="@+id/animelist_parameters_find.searching_order"
             android:text="Сортировака:"/>
 
         <TextView
-            android:id="@+id/animelist_parameters_find.searching_sort"
+            android:id="@+id/animelist_parameters_find.searching_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/animelist_parameters_find.searching_search"
@@ -191,7 +191,7 @@
             android:gravity="center"
             android:drawableRight="@drawable/icon_dropdown"
             android:drawableTint="@color/grey_700"
-            android:text="@string/animelist_finding_paramaters.sort"/>
+            android:text="@string/animelist_finding_paramaters.order"/>
 
         <Button
             android:id="@+id/animelist_parameters_find.searching_search"

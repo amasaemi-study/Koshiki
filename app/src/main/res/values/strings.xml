@@ -18,7 +18,7 @@
     <string name="animelist_finding_paramaters.season">Выберите сезон выхода аниме</string>
     <string name="animelist_finding_paramaters.stat_my_list">Выберите статус в вашем списке</string>
     <string name="animelist_finding_paramaters.genres">Выберите жанры для поиска</string>
-    <string name="animelist_finding_paramaters.sort">Выберите сортировку</string>
+    <string name="animelist_finding_paramaters.order">Выберите сортировку</string>
 
     <string name="animelist_fragment.input_anime_name">Введите название аниме</string>
     <string name="animelist_fragment.empty_label">Список элементов пуст</string>
@@ -27,4 +27,215 @@
     <string name="cardview_animelist.season">"Сезон: "</string>
     <string name="cardview_animelist.episodes">"Эпизодов: "</string>
 
+    <string-array name="status">
+        <item>Анонс</item>
+        <item>Онгоинг</item>
+        <item>Вышло</item>
+    </string-array>
+
+    <string-array name="kind">
+        <item>ТВ сериал</item>
+        <item>Фильс</item>
+        <item>OVA</item>
+        <item>ONA</item>
+        <item>Спешл</item>
+        <item>Клип</item>
+    </string-array>
+
+    <string-array name="rating">
+        <item>G</item>
+        <item>PG</item>
+        <item>PG-13</item>
+        <item>R-17</item>
+        <item>R+</item>
+        <item>Rx</item>
+    </string-array>
+
+    <string-array name="season">
+        <item>В будущем</item>
+        <item>Зима 2018</item>
+        <item>Осень 2017</item>
+        <item>Лето 2017</item>
+        <item>Зима 2017</item>
+        <item>Осень 2016</item>
+        <item>2010-2016</item>
+        <item>2000е</item>
+        <item>1999е</item>
+        <item>1980е</item>
+        <item>Ранее</item>
+    </string-array>
+
+    <string-array name="mylist">
+        <item>Запланировано</item>
+        <item>Смотрю</item>
+        <item>Пересматриваю</item>
+        <item>Просмотрено</item>
+        <item>Отложено</item>
+        <item>Брошено</item>
+    </string-array>
+
+    <string-array name="order">
+        <item>Случайно</item>
+        <item>По рейтингу</item>
+        <item>По популярности</item>
+        <item>По алфавиту</item>
+        <item>По дате выхода</item>
+        <item>По статусу</item>
+    </string-array>
+
+    <string-array name="genres">
+        <item>"Экшен"</item>
+        <item>"Приключения"</item>
+        <item>"Машины"</item>
+        <item>"Комедия"</item>
+        <item>"Безумие"</item>
+        <item>"Демоны"</item>
+        <item>"Детектив"</item>
+        <item>"Драма"</item>
+        <item>"Этти"</item>
+        <item>"Фэнтези"</item>
+        <item>"Игры"</item>
+        <item>"Хентай"</item>
+        <item>"Исторический"</item>
+        <item>"Ужасы"</item>
+        <item>"Детское"</item>
+        <item>"Магия"</item>
+        <item>"Боевые искусства"</item>
+        <item>"Меха"</item>
+        <item>"Музыка"</item>
+        <item>"Пародия"</item>
+        <item>"Самураи"</item>
+        <item>"Романтика"</item>
+        <item>"Школа"</item>
+        <item>"Фантастика"</item>
+        <item>"Сёдзе"</item>
+        <item>"Сёдзе-ай"</item>
+        <item>"Сёнен"</item>
+        <item>"Сёнен-ай"</item>
+        <item>"Космос"</item>
+        <item>"Спорт"</item>
+        <item>"Супер сила"</item>
+        <item>"Вампиры"</item>
+        <item>"Яой"</item>
+        <item>"Юри"</item>
+        <item>"Гарем"</item>
+        <item>"Повседневность"</item>
+        <item>"Сверхъестественное"</item>
+        <item>"Военное"</item>
+        <item>"Полиция"</item>
+        <item>"Психологическое"</item>
+        <item>"Триллер"</item>
+        <item>"Сейнен"</item>
+        <item>"Дзёсей"</item>
+    </string-array>
+
+    <string-array name="studios">
+        <item>A-1 Pictures Inc.</item>
+        <item>Studio DEEN</item>
+        <item>Production I.G</item>
+        <item>TMS Entertainment</item>
+        <item>Madhouse Studios</item>
+        <item>Sunrise</item>
+        <item>XEBEC</item>
+        <item>Studio Pierrot</item>
+        <item>Nippon Animation</item>
+        <item>J.C. Staff</item>
+        <item>Toei Animation</item>
+        <item>Oriental Light and Magic</item>
+        <item>Tatsunoko Productions</item>
+        <item>AIC</item>
+        <item>White Fox</item>
+        <item>Kyoto Animation</item>
+        <item>David Production</item>
+        <item>Studio Ghibli</item>
+        <item>Wit Studio</item>
+        <item>Polygon Pictures</item>
+        <item>Bones</item>
+        <item>Manglobe</item>
+        <item>SHAFT</item>
+        <item>AIC A.S.T.A.</item>
+        <item>Artland</item>
+        <item>Seven Arcs</item>
+        <item>GoHands</item>
+        <item>Lerche</item>
+        <item>MAPPA</item>
+        <item>TYO Animations</item>
+        <item>ufotable</item>
+        <item>P.A. Works</item>
+        <item>Brains Base</item>
+        <item>Bandai Namco Pictures</item>
+        <item>Hal Film Maker</item>
+        <item>LIDEN FILMS</item>
+        <item>Satelight</item>
+        <item>Studio Gallop</item>
+        <item>Silver Link</item>
+        <item>Trigger</item>
+        <item>A.C.G.T.</item>
+        <item>8bit</item>
+        <item>Studio Comet</item>
+        <item>Tokyo Movie Shinsha</item>
+        <item>Telecom Animation Film</item>
+        <item>Gainax</item>
+        <item>Diomedea</item>
+        <item>Gonzo</item>
+        <item>SANZIGEN</item>
+        <item>Dogakobo</item>
+        <item>APPP</item>
+        <item>Bee Train</item>
+        <item>TV Asahi</item>
+        <item>Daume</item>
+        <item>SynergySP</item>
+        <item>asread</item>
+        <item>Studio Gokumi</item>
+        <item>Shin-Ei Animation</item>
+        <item>feel.</item>
+        <item>Ordet</item>
+        <item>Production IMS</item>
+        <item>AIC Spirits</item>
+        <item>Studio Hibari</item>
+        <item>Toho Company Ltd.</item>
+        <item>Ajia-Do</item>
+        <item>FUNimation Entertainment</item>
+        <item>Yumeta Company</item>
+        <item>Discotek</item>
+        <item>Group TAC</item>
+        <item>ZEXCS</item>
+        <item>Actas</item>
+        <item>Kinema Citrus</item>
+        <item>Shogakukan Productions</item>
+        <item>TV Tokyo</item>
+        <item>Easy Film</item>
+        <item>Tezuka Production</item>
+        <item>Production Reed</item>
+        <item>TNK</item>
+        <item>Bandai Visual</item>
+        <item>AICPLUS+</item>
+        <item>Arms</item>
+        <item>Mushi Productions</item>
+        <item>Millepensee</item>
+        <item>Eiken</item>
+        <item>Kitty Films</item>
+        <item>Gathering</item>
+        <item>Triangle Staff</item>
+        <item>Seven</item>
+        <item>Chaos Project</item>
+        <item>Fuji TV</item>
+        <item>Tokyo Kids</item>
+        <item>Studio 4°C</item>
+        <item>Nomad</item>
+        <item>Sentai Filmworks</item>
+        <item>Hoods Entertainment</item>
+        <item>Knack Productions</item>
+        <item>Magic Bus</item>
+        <item>Artmic</item>
+        <item>Picture Magic</item>
+        <item>Ashi Productions Co. Inc.</item>
+        <item>CoMix Wave</item>
+        <item>Dynamic Planning</item>
+        <item>Radix</item>
+        <item>ANIMATE</item>
+        <item>Pony Canyon</item>
+        <item>Asahi Production</item>
+        <item>Sanrio</item>
+    </string-array>
 </resources>

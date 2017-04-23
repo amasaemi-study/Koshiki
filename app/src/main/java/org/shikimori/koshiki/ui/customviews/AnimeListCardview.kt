@@ -2,7 +2,6 @@ package org.shikimori.koshiki.ui.customviews
 
 import android.content.Context
 import android.graphics.Color
-import android.support.v7.widget.CardView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,15 +14,12 @@ import org.shikimori.koshiki.data.network.models.pojo.AnimeListPojo
 import org.shikimori.koshiki.utils.ConstantManager
 import org.shikimori.koshiki.utils.ValueParser
 
-import java.net.URL
-
 /**
  * Created by alex on 18.04.17.
  */
 
 class AnimeListCardview(val mContext: Context, rootView: View) {
     private val TAG = "AnimeListCardview"
-    private val parser: ValueParser
 
     // id аниме. По умолчанию - 0, в этом случае сервер вернет 404
     private var id: Int = 0
@@ -62,8 +58,6 @@ class AnimeListCardview(val mContext: Context, rootView: View) {
 
     init {
         setPosterLayoutParams(mContext)
-
-        parser = ValueParser()
     }
 
     /**
@@ -119,14 +113,14 @@ class AnimeListCardview(val mContext: Context, rootView: View) {
      * Метод устанавливает тип аниме
      */
     fun setKind(kind: String?) {
-        this.animeKind.text = parser.getKind(kind)
+        this.animeKind.text = ValueParser.getKind(kind)
     }
 
     /**
      * Метод устанавливает сезон выхода аниме
      */
     fun setSeason(season: String?) {
-        this.animeSeason.text = parser.getSeason(season)
+        this.animeSeason.text = ValueParser.getSeason(season)
     }
 
     /**
@@ -159,25 +153,25 @@ class AnimeListCardview(val mContext: Context, rootView: View) {
     private fun initStatus(status: String?) {
         when(status) {
             "anons" -> {
-                this.animeStatus.text = parser.getStatus(status)
+                this.animeStatus.text = ValueParser.getStatus(status)
                 this.animeStatus.setBackgroundColor(Color.parseColor("#ffecb3"))
                 this.animeStatus.setTextColor(Color.parseColor("#fb8c00"))
             }
 
             "ongoing" -> {
-                this.animeStatus.text = parser.getStatus(status)
+                this.animeStatus.text = ValueParser.getStatus(status)
                 this.animeStatus.setBackgroundColor(Color.parseColor("#b2ebf2"))
                 this.animeStatus.setTextColor(Color.parseColor("#0097a7"))
             }
 
             "released" -> {
-                this.animeStatus.text = parser.getStatus(status)
+                this.animeStatus.text = ValueParser.getStatus(status)
                 this.animeStatus.setBackgroundColor(Color.parseColor("#ffecb3"))
                 this.animeStatus.setTextColor(Color.parseColor("#fb8c00"))
             }
 
             else -> {
-                this.animeStatus.text = parser.getStatus(status)
+                this.animeStatus.text = ValueParser.getStatus(status)
                 this.animeStatus.setBackgroundColor(Color.parseColor("#efebe9"))
                 this.animeStatus.setTextColor(Color.parseColor("#757575"))
             }
