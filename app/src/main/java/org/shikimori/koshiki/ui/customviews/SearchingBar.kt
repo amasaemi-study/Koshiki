@@ -15,49 +15,37 @@ import org.shikimori.koshiki.R
  */
 class SearchingBar(val context: Context, rootView: View) : View.OnClickListener {
 
-    val vSearchingControlLayout: View
-    val vSearchingStatus: TextView
-    val vSearchingKind: TextView
-    val vSearchingAgeRating: TextView
-    val vSearchingSeason: TextView
-    val vSearchingMyList: TextView
-    val vSearchingGenres: TextView
-    val vSearchingSort: TextView
-    val vSearchingSearch: View
-    val vSearchingSubstrate: View
-    val openParametersItem: View
-    val iconExpandMore: View
+    private val vSearchingControlLayout = rootView.findViewById(R.id.animelist_parameters_find_container_control_layout)
+    private val vSearchingStatus = rootView.findViewById(R.id.animelist_parameters_find_searching_status) as TextView
+    private val vSearchingKind = rootView.findViewById(R.id.animelist_parameters_find_searching_kind) as TextView
+    private val vSearchingAgeRating = rootView.findViewById(R.id.animelist_parameters_find_searching_age_rating) as TextView
+    private val vSearchingSeason = rootView.findViewById(R.id.animelist_parameters_find_searching_season) as TextView
+    private val vSearchingMyList = rootView.findViewById(R.id.animelist_parameters_find_searching_my_list) as TextView
+    private val vSearchingGenres = rootView.findViewById(R.id.animelist_parameters_find_searching_genres) as TextView
+    private val vSearchingSort = rootView.findViewById(R.id.animelist_parameters_find_searching_sort) as TextView
+    private val vSearchingSearch = rootView.findViewById(R.id.animelist_parameters_find_searching_search)
+    private val vSearchingSubstrate = rootView.findViewById(R.id.animelist_parameters_find_substrate)
+    private val openParametersItem = rootView.findViewById(R.id.animelist_fragment_open_layout)
+    private val iconExpandMore = rootView.findViewById(R.id.animelist_fragment_icon_expanded_mode)
+
+    init {
+        vSearchingControlLayout.setOnClickListener(this)
+        vSearchingStatus.setOnClickListener(this)
+        vSearchingKind.setOnClickListener(this)
+        vSearchingAgeRating.setOnClickListener(this)
+        vSearchingSeason.setOnClickListener(this)
+        vSearchingMyList.setOnClickListener(this)
+        vSearchingGenres.setOnClickListener(this)
+        vSearchingSort.setOnClickListener(this)
+        vSearchingSearch.setOnClickListener(this)
+        vSearchingSubstrate.setOnClickListener(this)
+        openParametersItem.setOnClickListener(this)
+    }
 
     var mFindListener: OnFindListener? = null
 
     interface OnFindListener {
         fun onFind()
-    }
-
-    init {
-        vSearchingControlLayout = rootView.findViewById(R.id.animelist_parameters_find_container_control_layout)
-        vSearchingControlLayout.setOnClickListener(this)
-        vSearchingStatus = rootView.findViewById(R.id.animelist_parameters_find_searching_status) as TextView
-        vSearchingStatus.setOnClickListener(this)
-        vSearchingKind = rootView.findViewById(R.id.animelist_parameters_find_searching_kind) as TextView
-        vSearchingKind.setOnClickListener(this)
-        vSearchingAgeRating = rootView.findViewById(R.id.animelist_parameters_find_searching_age_rating) as TextView
-        vSearchingAgeRating.setOnClickListener(this)
-        vSearchingSeason = rootView.findViewById(R.id.animelist_parameters_find_searching_season) as TextView
-        vSearchingSeason.setOnClickListener(this)
-        vSearchingMyList = rootView.findViewById(R.id.animelist_parameters_find_searching_my_list) as TextView
-        vSearchingMyList.setOnClickListener(this)
-        vSearchingGenres = rootView.findViewById(R.id.animelist_parameters_find_searching_genres) as TextView
-        vSearchingGenres.setOnClickListener(this)
-        vSearchingSort = rootView.findViewById(R.id.animelist_parameters_find_searching_sort) as TextView
-        vSearchingSort.setOnClickListener(this)
-        vSearchingSearch = rootView.findViewById(R.id.animelist_parameters_find_searching_search)
-        vSearchingSearch.setOnClickListener(this)
-        vSearchingSubstrate = rootView.findViewById(R.id.animelist_parameters_find_substrate)
-        vSearchingSubstrate.setOnClickListener(this)
-        openParametersItem = rootView.findViewById(R.id.animelist_fragment_open_layout)
-        openParametersItem.setOnClickListener(this)
-        iconExpandMore = rootView.findViewById(R.id.animelist_fragment_icon_expanded_mode)
     }
 
     override fun onClick(v: View) {

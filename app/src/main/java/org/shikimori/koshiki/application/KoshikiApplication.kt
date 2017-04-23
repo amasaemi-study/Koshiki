@@ -20,11 +20,4 @@ object KoshikiApplication : Application() {
                 .build() }
 
     val shikiApi: ShikiApi by lazy { mShikimoriRetrofit.create(ShikiApi::class.java) }
-
-    /**
-     * Метод возвращает экземпляр mShikiApi
-     * Test: ApplicationTest.appApiNotNull
-     */
-    //fun getShikiApi(): ShikiApi = mShikiApi
-
 }

@@ -1,12 +1,8 @@
-package org.shikimori.koshiki.managers
+package org.shikimori.koshiki.data.network.managers
 
-import android.content.Context
-import android.util.Log
-import android.view.View
-import android.widget.ProgressBar
 import org.shikimori.koshiki.application.KoshikiApplication
-import org.shikimori.koshiki.data.network.managers.OnDownloadFinish
 import org.shikimori.koshiki.data.network.models.pojo.AnimeListPojo
+import org.shikimori.koshiki.ui.customviews.swiperefresh.SwipeRefreshLayout
 
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,9 +12,17 @@ import retrofit2.Response
  * Менеджер для работы с Animes API
  */
 
-class AnimesManager(val progressBar: ProgressBar?) {
+class AnimesManager(val refresh: SwipeRefreshLayout?) {
 
     lateinit private var listener: OnDownloadFinish
+
+    init {
+        // TODO настроить цвета refresh'a
+        refresh?.setColorScheme(android.R.color.holo_blue_bright,
+        android.R.color.holo_green_light,
+        android.R.color.holo_orange_light,
+        android.R.color.holo_red_light);
+    }
 
     fun setOnDownloadFinishListener(listener: OnDownloadFinish) {
         this.listener = listener
@@ -42,7 +46,7 @@ class AnimesManager(val progressBar: ProgressBar?) {
                       season: String?, rating: String?, genre: String?, myList: String?,
                       search: String?) {
 
-        progressBar?.visibility = View.VISIBLE
+        refresh?.isRefreshing = true
 
         KoshikiApplication.shikiApi.getAnimesList(page, order, kind, status,
                 season, rating, genre, myList, search)
@@ -54,13 +58,13 @@ class AnimesManager(val progressBar: ProgressBar?) {
                         else
                             onFailure(call, Throwable("List size is null"))
 
-                        progressBar?.visibility = View.GONE
+                        refresh?.isRefreshing = false
                     }
 
                     override fun onFailure(call: Call<List<AnimeListPojo>>?, t: Throwable) {
                         listener.onLoadFailure(t)
 
-                        progressBar?.visibility = View.GONE
+                        refresh?.isRefreshing = false
                     }
                 })
     }
