@@ -5,6 +5,74 @@ package org.shikimori.koshiki.utils
  */
 class ValueParser {
 
+    /**
+     * Метод возвращает тип аниме
+     */
+    fun getKind(kind: String?): String {
+        when (kind) {
+            "ТВ сериал" -> return "tv"
+            "Фильм" -> return "movie"
+            "OVA" -> return "ova"
+            "ONA" -> return "ona"
+            "Спешл" -> return "special"
+            "Клип" -> return "music"
+
+            "tv" -> return "ТВ сериал"
+            "movie" -> return "Фильм"
+            "ova" -> return "OVA"
+            "ona" -> return "ONA"
+            "special" -> return "Спешл"
+            "music" -> return "Клип"
+
+            else -> return "-"
+        }
+    }
+
+    /**
+     * Метод возвращает сезон аниме
+     */
+    fun getSeason(season: String?): String {
+        val parseDate = season?.split("-") // 0 - год, 1 - месяц, 2 - день
+
+        when (parseDate?.get(1)) {
+            "12", "01", "02" -> return "Зима " + parseDate[0]
+
+            "03", "04", "05" -> return "Весна " + parseDate[0]
+
+            "06", "07", "08" -> return "Лето " + parseDate[0]
+
+            "09", "10", "11" -> return "Осень " + parseDate[0]
+
+            else -> return "-"
+        }
+
+        // возвращает в случае, если блок when не был вызван (parseDate == null)
+        return "-"
+    }
+
+    /**
+     * Метод возвращает статус аниме
+     */
+    fun getStatus(status: String?): String {
+        when(status) {
+            "Анонс" -> return "anons"
+            "Онгоинг" -> return "ongoing"
+            "Вышло" -> return "released"
+
+            "anons" -> return "Анонс"
+            "ongoing" -> return "Онгоинг"
+            "released" -> return "Вышло"
+
+            else -> return "-"
+        }
+    }
+
+
+
+
+
+
+
     fun getOrder(order: Int?): String {
         when(order) {
             0 -> return "popularity" // actual
@@ -63,23 +131,7 @@ class ValueParser {
         }
     }
 
-    fun getStatus(label: Boolean, status: Int?): String? {
-        if (!label) {
-            when(status) {
-                0 -> return "anons"
-                1 -> return "ongoing"
-                2 -> return "released"
-                else -> return null
-            }
-        } else {
-            when(status) {
-                0 -> return "Анонс"
-                1 -> return "Онгоинг"
-                2 -> return "Вышло"
-                else -> return "-"
-            }
-        }
-    }
+
 
     fun getStatusInt(status: String?): Int {
         when(status) {
@@ -88,11 +140,6 @@ class ValueParser {
             "released" -> return 2
             else -> return -1
         }
-    }
-
-    fun getSeason(season: String?): String? {
-        // TODO
-        return null
     }
 
     fun getRating(label: Boolean, rating: Int?): String? {

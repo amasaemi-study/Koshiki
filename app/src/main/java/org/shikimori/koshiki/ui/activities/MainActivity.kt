@@ -11,8 +11,12 @@ import android.view.Gravity
 import android.widget.ProgressBar
 
 import org.shikimori.koshiki.R
+import org.shikimori.koshiki.data.network.managers.OnDownloadFinish
+import org.shikimori.koshiki.managers.AnimesManager
 import org.shikimori.koshiki.ui.fragments.AnimeListFragment
 import org.shikimori.koshiki.ui.fragments.BaseFragment
+import retrofit2.Call
+import retrofit2.Response
 
 /**
  * Created by alex on 18.04.17.
@@ -20,27 +24,24 @@ import org.shikimori.koshiki.ui.fragments.BaseFragment
 class MainActivity : AppCompatActivity() {
 
     // views
-    var vDrawerLayout: DrawerLayout? = null
-    var vToolbar: Toolbar? = null
-    var vProgressBar: ProgressBar? = null
-    // val vFragmentContainer = findViewById(R.id.activity_main_fragment_container) as FrameLayout
-    var vNavigationView: NavigationView? = null
+    private val vDrawerLayout by lazy { findViewById(R.id.activity_main_drawer_layout) as DrawerLayout }
+    private val vToolbar by lazy { findViewById(R.id.activity_main_toolbar) as Toolbar }
+    private val vNavigationView by lazy { findViewById(R.id.activity_main_navigation_view) as NavigationView }
 
     // tags
-    val TAG = "MainActivity"
+    private val TAG = "MainActivity"
 
-    var FRAGMENT_TAG: String? = null
+    private var FRAGMENT_TAG: String? = null
 
     // fragment managers
-    val mFragmentManager = fragmentManager
-    var mFragmentTransaction: FragmentTransaction? = null
-    var mBaseFragment: BaseFragment? = null
+    private val mFragmentManager = fragmentManager
+    private var mFragmentTransaction: FragmentTransaction? = null
+    private var mBaseFragment: BaseFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
-
         initControlViews()
 
         addFragment(AnimeListFragment.TAG, AnimeListFragment)
@@ -50,22 +51,18 @@ class MainActivity : AppCompatActivity() {
      * Инициализация управляющих элементов
      */
     private fun initControlViews() {
-        vDrawerLayout = findViewById(R.id.activity_main_drawer_layout) as DrawerLayout
-        vToolbar = findViewById(R.id.activity_main_toolbar) as Toolbar
-        vProgressBar = findViewById(R.id.activity_main_progress_bar) as ProgressBar
-        vNavigationView = findViewById(R.id.activity_main_navigation_view) as NavigationView
 
         // устанавливает toolbar как actionbar
         setSupportActionBar(vToolbar)
 
         val toggle = ActionBarDrawerToggle(this, vDrawerLayout, vToolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-        vDrawerLayout!!.addDrawerListener(toggle)
+        vDrawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
         // слушатель кликов меню
-        vNavigationView!!.setNavigationItemSelectedListener {
-            vDrawerLayout!!.closeDrawers()
+        vNavigationView.setNavigationItemSelectedListener {
+            vDrawerLayout.closeDrawers()
             when(it.itemId) {
                 // todo 18.04.2017 обработчик нажатия на элементы меню
                 R.id.nav_view_anime_catalog -> {
@@ -95,8 +92,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (vDrawerLayout!!.isDrawerOpen(Gravity.START))
-            vDrawerLayout!!.closeDrawers()
+        if (vDrawerLayout.isDrawerOpen(Gravity.START))
+            vDrawerLayout.closeDrawers()
         else if (mBaseFragment!!.onBackPressed())
             super.onBackPressed()
     }

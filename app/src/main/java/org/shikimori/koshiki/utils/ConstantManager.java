@@ -5,5 +5,7 @@ package org.shikimori.koshiki.utils;
  */
 
 public interface ConstantManager {
-    public static final String EMPTY_VALUE = "-";
+    String EMPTY_VALUE = "-";
+    String SHIKI_BASE = "https://shikimori.org/";
+    String SHIKI_BASE_WITHOUT_DELIMITER = "https://shikimori.org";
 }

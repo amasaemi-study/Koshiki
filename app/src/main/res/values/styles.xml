@@ -30,8 +30,7 @@
         <item name="android:paddingTop">@dimen/padding_2dp</item>
         <item name="android:paddingBottom">@dimen/padding_2dp</item>
         <item name="android:textStyle">bold</item>
-        <!-- В дальнейшем отказаться от поддержки API 15 и убрать targetApi -->
-        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
+        <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
     <style name="selectable_item">

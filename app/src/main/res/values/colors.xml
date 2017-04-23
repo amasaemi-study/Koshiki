@@ -13,15 +13,15 @@
     <color name="grey_800_transparent">#c8424242</color>
 
     <!-- Цвета status -->
-    <color name="light_green_200">#C5E1A5</color>
-    <color name="green_900">#1B5E20</color>
+    <color name="light_green_100">#dcedc8</color>
+    <color name="green_900">#388e3c</color>
 
-    <color name="orange_200">#FFCC80</color>
-    <color name="deep_orange_900">#BF360C</color>
+    <color name="orange_100">#ffecb3</color>
+    <color name="deep_orange_900">#fb8c00</color>
 
-    <color name="light_blue_100">#B3E5FC</color>
-    <color name="cyan_900">#006064</color>
+    <color name="light_blue_100">#b2ebf2</color>
+    <color name="cyan_900">#0097a7</color>
 
-    <color name="brown_100">#D7CCC8</color>
-    <color name="grey_900">#212121</color>
+    <color name="brown_50">#efebe9</color>
+    <color name="grey_900">#757575</color>
 </resources>

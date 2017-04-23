@@ -1,11 +1,15 @@
 package org.shikimori.koshiki.ui.customviews
 
 import android.content.Context
+import android.graphics.Color
 import android.support.v7.widget.CardView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import org.shikimori.koshiki.R
+import org.shikimori.koshiki.data.network.models.pojo.AnimeListPojo
 
 import org.shikimori.koshiki.utils.ConstantManager
 import org.shikimori.koshiki.utils.ValueParser
@@ -16,7 +20,7 @@ import java.net.URL
  * Created by alex on 18.04.17.
  */
 
-class AnimeListCardview(mContext: Context) {
+class AnimeListCardview(val mContext: Context, rootView: View) {
     private val TAG = "AnimeListCardview"
     private val parser: ValueParser
 
@@ -25,35 +29,35 @@ class AnimeListCardview(mContext: Context) {
 
     // TODO 18.04.2017 проверить работоспособность = View(context). Если нет, переписать на findById
     // сама карточка. Для нее обрабатывать onClick
-    private val animeCardview = CardView(mContext)
+    private val animeCardview by lazy { rootView.findViewById(R.id.animelist_cardview_cardview) }
 
     // основной layout. Скрывать до загрузки данных
     // unactual
     // val visibilityLayout = LinearLayout(mContext)
 
     // постер
-    private val animePoster = ImageView(mContext)
+    private val animePoster by lazy { rootView.findViewById(R.id.animelist_cardview_poster) as ImageView }
 
     // название аниме на русском. Если название на русском отсутствует - писать на англ
-    private val animeNameRu = TextView(mContext)
+    private val animeNameRu by lazy { rootView.findViewById(R.id.animelist_cardview_name_ru) as TextView }
 
     // название аниме на английском (транслитом)
-    private val animeNameEn = TextView(mContext)
+    private val animeNameEn by lazy { rootView.findViewById(R.id.animelist_cardview_name_en) as TextView }
 
     // тип аниме (tv, ova, etc)
-    private val animeKind = TextView(mContext)
+    private val animeKind by lazy { rootView.findViewById(R.id.animelist_cardview_kind) as TextView }
 
     // аниме сезон (Зима 2015 и тд)
-    private val animeSeason = TextView(mContext)
+    private val animeSeason by lazy { rootView.findViewById(R.id.animelist_cardview_season) as TextView }
 
     // количество эпизодов (если онгоинг -> вышло серий / всего серий; иначе вышло серий)
-    private  val animeEpisodes = TextView(mContext)
+    private  val animeEpisodes by lazy { rootView.findViewById(R.id.animelist_cardview_episodes) as TextView }
 
     // аниме статус (ongoing, anons, released)
-    private val animeStatus = TextView(mContext)
+    private val animeStatus by lazy { rootView.findViewById(R.id.animelist_cardview_status) as TextView }
 
     // меню для добавления аниме в избранное и назначения статуса просмотренного
-    private val cardviewMenu = ImageView(mContext)
+    private val cardviewMenu by lazy { R.id.animelist_cardview_popup_menu }
 
     init {
         setCardviewMenu()
@@ -65,26 +69,16 @@ class AnimeListCardview(mContext: Context) {
     /**
      * Метод инициализирует карточку
      */
-    /*fun initCard(id: Int,
-                        posterUrl: String,
-                        animeNameRu: String,
-                        animeNameEn: String,
-                        animeKind: String,
-                        animeSeason: String,
-                        animeEpisodes: String,
-                        animeStatus: String) {
-        this.id = id
-            initRuName(animeNameRu, animeNameEn)
-        // this.animeNameRu.setText(animeNameRu)
-        // this.animeNameEn.setText(animeNameEn)
-        this.animeKind.setText(animeKind)
-        this.animeSeason.setText(animeSeason)
-        this.animeEpisodes.setText(animeEpisodes)
-            initStatus(animeStatus)
-        // this.animeStatus.setText(animeStatus)
-        // TODO 18.04.2017 подгрузить глайдом изображение в animePoster. Линк - posterUrl
-        // TODO 18.04.2017 при неудачной загрузке изображения ставить дефолтную картинку
-    }*/
+    fun initCard(model: AnimeListPojo) {
+        setId(model.getId())
+        setPoster(ConstantManager.SHIKI_BASE_WITHOUT_DELIMITER + model.getPreviewPoster())
+        setTitles(model.getRuName(), model.getEnName())
+        setKind(model.getKind())
+        setSeason(model.getAiredOn())
+        setEpisodes(model.getEpisodes())
+        setStatus(model.getStatus())
+        setCardviewMenu()
+    }
 
     /**
      * Метод настраивает обработчик нажатий на карточку
@@ -96,9 +90,17 @@ class AnimeListCardview(mContext: Context) {
     /**
      * Метод устанавливает картинку у постера
      */
-    fun setPoster(posterUrl: String) {
+    fun setPoster(posterUrl: String?) {
         // TODO 18.04.2017 подгрузить глайдом изображение в animePoster. Линк - posterUrl
         // TODO 18.04.2017 при неудачной загрузке изображения ставить дефолтную картинку
+
+        Glide.with(mContext)
+                .load(posterUrl)
+                .error(R.drawable.img_load_failed)
+                .dontAnimate()
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .into(animePoster);
     }
 
     /**
@@ -111,74 +113,75 @@ class AnimeListCardview(mContext: Context) {
     /**
      * Метод устанавливает русское и английское назания для аниме
      */
-    fun setTitles(ruName: String, enName: String) {
+    fun setTitles(ruName: String?, enName: String?) {
         initRuName(ruName, enName)
     }
 
     /**
      * Метод устанавливает тип аниме
      */
-    fun setKind(kind: Int) {
-        this.animeKind.text = parser.getKind(true, kind)
+    fun setKind(kind: String?) {
+        this.animeKind.text = parser.getKind(kind)
     }
 
     /**
      * Метод устанавливает сезон выхода аниме
      */
-    fun setSeason(season: String) {
+    fun setSeason(season: String?) {
         this.animeSeason.text = parser.getSeason(season)
     }
 
     /**
      * Метод устанавливает количество эпизодов
      */
-    fun setEpisodes(episodes: String) {
+    fun setEpisodes(episodes: String?) {
         this.animeEpisodes.text = episodes
     }
 
-    fun setStatus(status: Int) {
+    fun setStatus(status: String?) {
         initStatus(status)
     }
 
     /**
      * Метод инициализирует animeNameRu и animeNameEn -> если rusName == null -> animeNameRu.text = enName
      */
-    private fun initRuName(ruName: String, enName: String) {
-        if(ruName.equals(ConstantManager.EMPTY_VALUE))
-            this.animeNameRu.setText(enName)
-        else {
-            this.animeNameRu.setText(ruName)
-            this.animeNameEn.setText(enName)
+    private fun initRuName(ruName: String?, enName: String?) {
+        if(ruName == null) {
+            this.animeNameRu.text = enName
+            this.animeNameEn.text = ""
+        } else {
+            this.animeNameRu.text = ruName
+            this.animeNameEn.text = enName
         }
     }
 
     /**
      * Метод инициализирует и раскрашивает view и текст статуса
      */
-    private fun initStatus(status: Int) {
+    private fun initStatus(status: String?) {
         when(status) {
-            0 -> {
-                this.animeStatus.text = parser.getStatus(true, status)
-                this.animeStatus.setBackgroundColor(R.color.orange_200)
-                this.animeStatus.setTextColor(R.color.deep_orange_900)
+            "anons" -> {
+                this.animeStatus.text = parser.getStatus(status)
+                this.animeStatus.setBackgroundColor(Color.parseColor("#ffecb3"))
+                this.animeStatus.setTextColor(Color.parseColor("#fb8c00"))
             }
 
-            1 -> {
-                this.animeStatus.text = parser.getStatus(true, status)
-                this.animeStatus.setBackgroundColor(R.color.light_green_200)
-                this.animeStatus.setTextColor(R.color.green_900)
+            "ongoing" -> {
+                this.animeStatus.text = parser.getStatus(status)
+                this.animeStatus.setBackgroundColor(Color.parseColor("#b2ebf2"))
+                this.animeStatus.setTextColor(Color.parseColor("#0097a7"))
             }
 
-            2 -> {
-                this.animeStatus.text = parser.getStatus(true, status)
-                this.animeStatus.setBackgroundColor(R.color.light_blue_100)
-                this.animeStatus.setTextColor(R.color.cyan_900)
+            "released" -> {
+                this.animeStatus.text = parser.getStatus(status)
+                this.animeStatus.setBackgroundColor(Color.parseColor("#ffecb3"))
+                this.animeStatus.setTextColor(Color.parseColor("#fb8c00"))
             }
 
             else -> {
-                this.animeStatus.text = parser.getStatus(true, status)
-                this.animeStatus.setBackgroundColor(R.color.brown_100)
-                this.animeStatus.setTextColor(R.color.grey_900)
+                this.animeStatus.text = parser.getStatus(status)
+                this.animeStatus.setBackgroundColor(Color.parseColor("#efebe9"))
+                this.animeStatus.setTextColor(Color.parseColor("#757575"))
             }
         }
     }

@@ -18,15 +18,11 @@ import org.shikimori.koshiki.ui.customviews.AnimeListCardview
 class AnimeListAdapter(context: Context) : RecyclerView.Adapter<AnimeViewHolder>(), IRecyclerAdapter {
 
     // список аниме
-    val mList: MutableList<AnimeListPojo>
+    private val mList by lazy { ArrayList<AnimeListPojo>() } // MutableList<AnimeListPojo>
     // слушатель конца списка
-    var mEndListListener: OnEndListListener? = null
+    private var mEndListListener: OnEndListListener? = null
     // переменная == true, если конец списка
-    var mEndListChecker: Boolean = false
-
-    init {
-        mList = ArrayList<AnimeListPojo>()
-    }
+    private var mEndListChecker: Boolean = false
 
     /**
      * Метод переопределяет слушатель конца списка
@@ -41,19 +37,7 @@ class AnimeListAdapter(context: Context) : RecyclerView.Adapter<AnimeViewHolder>
     }
 
     override fun onBindViewHolder(holder: AnimeViewHolder, position: Int) {
-        /*holder.card.animeNameRu.text = mList!!.get(position).animeNameRu
-        holder.card.animeNameEn.text = mList[position].animeNameEn
-        holder.card.animeKind.text = mList[position].animeKind
-        holder.card.animeSeason.text = mList[position].animeSeason
-        holder.card.animeEpisodes.text = mList[position].animeEpisodes*/
-
-        holder.card.setId(mList[position].getId())
-        holder.card.setPoster(mList[position].getPreviewPoster())
-        holder.card.setTitles(mList[position].getRuName(), mList[position].getEnName())
-        holder.card.setKind(mList[position].getKind())
-        holder.card.setSeason(mList[position].getAiredOn())
-        holder.card.setEpisodes(mList[position].getEpisodes())
-        holder.card.setStatus(mList[position].getStatus())
+        holder.card.initCard(mList[position])
 
         // TODO 18.04.2017 добавить подгрузку глайдом holder.card.animeImage
 
@@ -90,6 +74,6 @@ class AnimeListAdapter(context: Context) : RecyclerView.Adapter<AnimeViewHolder>
     }
 
     class AnimeViewHolder(context: Context, itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val card = AnimeListCardview(context)
+        val card = AnimeListCardview(context, itemView)
     }
 }
