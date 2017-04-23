@@ -6,6 +6,7 @@ import android.support.v7.widget.CardView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import org.shikimori.koshiki.R
@@ -57,10 +58,9 @@ class AnimeListCardview(val mContext: Context, rootView: View) {
     private val animeStatus by lazy { rootView.findViewById(R.id.animelist_cardview_status) as TextView }
 
     // меню для добавления аниме в избранное и назначения статуса просмотренного
-    private val cardviewMenu by lazy { R.id.animelist_cardview_popup_menu }
+    private val cardviewMenu by lazy { rootView.findViewById(R.id.animelist_cardview_popup_menu) }
 
     init {
-        setCardviewMenu()
         setPosterLayoutParams(mContext)
 
         parser = ValueParser()
@@ -91,9 +91,6 @@ class AnimeListCardview(val mContext: Context, rootView: View) {
      * Метод устанавливает картинку у постера
      */
     fun setPoster(posterUrl: String?) {
-        // TODO 18.04.2017 подгрузить глайдом изображение в animePoster. Линк - posterUrl
-        // TODO 18.04.2017 при неудачной загрузке изображения ставить дефолтную картинку
-
         Glide.with(mContext)
                 .load(posterUrl)
                 .error(R.drawable.img_load_failed)
@@ -191,6 +188,13 @@ class AnimeListCardview(val mContext: Context, rootView: View) {
      * Метод настраивает обработчки меню cardviewMenu
      */
     private fun setCardviewMenu() {
+
+        cardviewMenu.setOnClickListener(object: View.OnClickListener {
+
+            override fun onClick(p0: View?) {
+                Toast.makeText(mContext, "Cardmenu click", Toast.LENGTH_SHORT).show()
+            }
+        })
         // TODO 18.04.2017 обработчик меню cardviewMenu (popup)
     }
 

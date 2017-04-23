@@ -23,17 +23,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="?android:actionBarSize"
                 android:background="?attr/colorPrimary"
-                app:popupTheme="@style/AppTheme.PopupOverlay">
+                app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
-                <ProgressBar
-                    android:id="@+id/activity_main.progress_bar"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="start"
-                    android:layout_marginLeft="@dimen/margin_4dp"
-                    android:visibility="visible"/>
-
-            </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
 
         <FrameLayout

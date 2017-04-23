@@ -1,21 +1,19 @@
 package org.shikimori.koshiki.ui.fragments
 
-import android.content.res.Configuration
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
 import android.util.Log
 import android.view.*
-import android.widget.ProgressBar
 
 import org.shikimori.koshiki.R
 import org.shikimori.koshiki.data.network.managers.OnDownloadFinish
-import org.shikimori.koshiki.managers.AnimesManager
+import org.shikimori.koshiki.data.network.managers.AnimesManager
 import org.shikimori.koshiki.ui.adapters.AnimeListAdapter
 import org.shikimori.koshiki.ui.adapters.interfaces.OnEndListListener
 import org.shikimori.koshiki.ui.customviews.SearchingBar
+import org.shikimori.koshiki.ui.customviews.swiperefresh.SwipeRefreshLayout
 
 import retrofit2.Call
 import retrofit2.Response
@@ -49,6 +47,7 @@ class AnimeListFragment : BaseFragment() {
 
     lateinit private var mSearchingBar: SearchingBar
     lateinit private var mRecyclerView: RecyclerView
+    lateinit private var mEmptyLabel: View
 
     // list adapter
     private val mListAdapter by lazy { AnimeListAdapter(activity) }
@@ -63,6 +62,8 @@ class AnimeListFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // настраиваем title у toolbar
         activity.title = getString(R.string.animelist_nav_menu_anime_catalog)
+
+        mEmptyLabel = view.findViewById(R.id.animelist_fragment_empty_label)
 
         initFindBar(view)
         initList(view)
@@ -87,7 +88,7 @@ class AnimeListFragment : BaseFragment() {
 
         val item = menu.findItem(R.id.menu_activity_list_search)
         val searchView = item.actionView as SearchView
-        searchView.queryHint = "Введите название аниме"
+        searchView.queryHint = getString(R.string.animelist_fragment_input_anime_name)
         searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(p0: String): Boolean {
@@ -111,16 +112,22 @@ class AnimeListFragment : BaseFragment() {
      */
     private fun initList(rootView: View) {
         mRecyclerView = rootView.findViewById(R.id.animelist_fragment_recycler_view) as RecyclerView
-        //mRecyclerView.addItemDecoration()
-        settingRecyclerViewLayoutManager(mRecyclerView)
+        //settingRecyclerViewLayoutManager(mRecyclerView)
+        mRecyclerView.layoutManager = LinearLayoutManager(activity)
         mRecyclerView.adapter = mListAdapter
 
-        mAnimesManager = AnimesManager(activity.findViewById(R.id.activity_main_progress_bar) as ProgressBar)
+        mAnimesManager = AnimesManager(rootView.findViewById(R.id.animelist_fragment_refresh) as SwipeRefreshLayout)
         // переопределяем действие по окончанию загрузки
         mAnimesManager.setOnDownloadFinishListener(object: OnDownloadFinish {
+
             override fun onLoadSuccess(call: Call<*>, response: Response<*>) {
+                if ((response.body() as MutableList<*>).size == 0)
+                    mEmptyLabel.visibility = View.VISIBLE
+                else
                 // пока такой костыльный метод проверки, является ли запрос началом нового списка
                 if (call.request().url().toString().contains("page=1&")) {
+                    mEmptyLabel.visibility = View.GONE
+
                     mListAdapter.setItems(response.body() as MutableList<*>)
                     mRecyclerView.scrollToPosition(0)
                     mListAdapter.notifyDataSetChanged()
@@ -135,26 +142,30 @@ class AnimeListFragment : BaseFragment() {
 
             override fun onLoadFailure(throwable: Throwable) {
                 // TODO
+                mEmptyLabel.visibility = View.VISIBLE
+
                 Log.e(TAG, throwable.message)
             }
         })
 
         mListAdapter.setOnEndListListener(object: OnEndListListener {
             override fun onEndList() {
-                // TODO обработать конец списка
+                page++
+                getAnimeList(page, order, kind, status, season, rating, genre, myList, search)
             }
         })
     }
 
     /**
      * Метод настраивает LayoutManager для RecyclerView под разные ориентации экрана
+     * Добавить в будущих версиях
      */
-    private fun settingRecyclerViewLayoutManager(recyclerView: RecyclerView) {
+    /*private fun settingRecyclerViewLayoutManager(recyclerView: RecyclerView) {
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
             recyclerView.layoutManager = LinearLayoutManager(activity)
         else
             recyclerView.layoutManager = GridLayoutManager(activity, 2)
-    }
+    }*/
 
     /**
      * Метод получает список от менеджера и обновляет адаптер

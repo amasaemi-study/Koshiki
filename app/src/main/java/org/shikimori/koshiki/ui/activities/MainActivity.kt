@@ -12,7 +12,7 @@ import android.widget.ProgressBar
 
 import org.shikimori.koshiki.R
 import org.shikimori.koshiki.data.network.managers.OnDownloadFinish
-import org.shikimori.koshiki.managers.AnimesManager
+import org.shikimori.koshiki.data.network.managers.AnimesManager
 import org.shikimori.koshiki.ui.fragments.AnimeListFragment
 import org.shikimori.koshiki.ui.fragments.BaseFragment
 import retrofit2.Call

@@ -5,19 +5,21 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import org.shikimori.koshiki.R
 import org.shikimori.koshiki.data.network.models.pojo.AnimeListPojo
 import org.shikimori.koshiki.ui.adapters.AnimeListAdapter.AnimeViewHolder
+import org.shikimori.koshiki.ui.adapters.interfaces.IRecyclerAdapter
 import org.shikimori.koshiki.ui.adapters.interfaces.OnEndListListener
 import org.shikimori.koshiki.ui.customviews.AnimeListCardview
 
 /**
  * Created by Александр on 18.04.2017.
  */
-class AnimeListAdapter(context: Context) : RecyclerView.Adapter<AnimeViewHolder>(), IRecyclerAdapter {
+class AnimeListAdapter(val mContext: Context) : RecyclerView.Adapter<AnimeViewHolder>(), IRecyclerAdapter {
 
     // список аниме
-    private val mList by lazy { ArrayList<AnimeListPojo>() } // MutableList<AnimeListPojo>
+    private val mList by lazy { ArrayList<AnimeListPojo>() }
     // слушатель конца списка
     private var mEndListListener: OnEndListListener? = null
     // переменная == true, если конец списка
@@ -41,7 +43,12 @@ class AnimeListAdapter(context: Context) : RecyclerView.Adapter<AnimeViewHolder>
         // TODO 18.04.2017 добавить подгрузку глайдом holder.card.animeImage
 
         // TODO 18.04.2017 переопределить слушатель нажатия на карточку
-        // holder.card.setOnCardClickListener(View.OnClickListener { })
+        holder.card.setOnCardClickListener(object: View.OnClickListener {
+
+            override fun onClick(p0: View) {
+                Toast.makeText(mContext, "Card click", Toast.LENGTH_SHORT).show()
+            }
+        })
 
         // проверяем на конце списка recyclerView
         if (mEndListChecker && (position == getItemCount() - 1)) {

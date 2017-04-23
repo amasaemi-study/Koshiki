@@ -20,4 +20,11 @@
     <string name="animelist_finding_paramaters.genres">Выберите жанры для поиска</string>
     <string name="animelist_finding_paramaters.sort">Выберите сортировку</string>
 
+    <string name="animelist_fragment.input_anime_name">Введите название аниме</string>
+    <string name="animelist_fragment.empty_label">Список элементов пуст</string>
+
+    <string name="cardview_animelist.type">"Тип: "</string>
+    <string name="cardview_animelist.season">"Сезон: "</string>
+    <string name="cardview_animelist.episodes">"Эпизодов: "</string>
+
 </resources>
