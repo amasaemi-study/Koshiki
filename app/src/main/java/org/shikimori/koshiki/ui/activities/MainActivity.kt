@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         initControlViews()
 
-        addFragment(AnimeListFragment.TAG, AnimeListFragment)
+        addFragment(AnimeListFragment.TAG, AnimeListFragment.newInstance())
     }
 
     /**
@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId) {
                 // todo 18.04.2017 обработчик нажатия на элементы меню
                 R.id.nav_view_anime_catalog -> {
-                    addFragment(AnimeListFragment.TAG, AnimeListFragment)
+                    addFragment(AnimeListFragment.TAG, AnimeListFragment.newInstance())
                     return@setNavigationItemSelectedListener true
                 }
 

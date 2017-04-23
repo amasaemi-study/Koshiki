@@ -5,7 +5,7 @@
     android:id="@+id/animelist_cardview.cardview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/margin_1dp"
+    android:layout_margin="@dimen/margin_1dp"
     android:background="?android:selectableItemBackground"
     app:cardCornerRadius="@dimen/margin_2dp"
     app:cardElevation="@dimen/margin_2dp">

@@ -10,9 +10,8 @@ import retrofit2.http.Query
  */
 interface ShikiApi {
 
-    @GET("/api/animes")
+    @GET("/api/animes?limit=14")
     fun getAnimesList(@Query("page") page: Int,
-                      @Query("limit") limit: Int = 15,
                       @Query("order") order: String?,
                       @Query("type") kind: String?,
                       @Query("status") status: String?,

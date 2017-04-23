@@ -1,31 +1,52 @@
 package org.shikimori.koshiki.ui.fragments
 
+import android.content.res.Configuration
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.support.v7.widget.SearchView
+import android.util.Log
+import android.view.*
 import android.widget.ProgressBar
 
 import org.shikimori.koshiki.R
 import org.shikimori.koshiki.data.network.managers.OnDownloadFinish
-import org.shikimori.koshiki.data.network.models.pojo.AnimeListPojo
 import org.shikimori.koshiki.managers.AnimesManager
 import org.shikimori.koshiki.ui.adapters.AnimeListAdapter
 import org.shikimori.koshiki.ui.adapters.interfaces.OnEndListListener
 import org.shikimori.koshiki.ui.customviews.SearchingBar
+
 import retrofit2.Call
 import retrofit2.Response
 
 /**
  * Created by Александр on 18.04.2017.
  */
-object AnimeListFragment : BaseFragment() {
+class AnimeListFragment : BaseFragment() {
 
-    val TAG = "AnimeListFragment"
+    // newInstance pattern
+    companion object {
+        val TAG = "AnimeListFragment"
 
-//    private val vProgressBar by lazy { activity.findViewById(R.id.activity_main_progress_bar) as ProgressBar }
+        fun newInstance(): AnimeListFragment {
+            val fragment = AnimeListFragment()
+            fragment.arguments = Bundle()
+            return fragment
+        }
+    }
+
+    // request params
+    var page: Int = 1
+    var order: String? = null
+    var kind: String? = null
+    var status: String? = null
+    var season: String? = null
+    var rating: String? = null
+    var genre: String? = null
+    var myList: String? = null
+    var search: String? = null
+
     lateinit private var mSearchingBar: SearchingBar
     lateinit private var mRecyclerView: RecyclerView
 
@@ -33,12 +54,11 @@ object AnimeListFragment : BaseFragment() {
     private val mListAdapter by lazy { AnimeListAdapter(activity) }
 
     // API manager
-    private val mAnimesManager = AnimesManager(/*vProgressBar*/ null)
+    lateinit private var mAnimesManager: AnimesManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_animelist, container, false)
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // настраиваем title у toolbar
@@ -47,7 +67,12 @@ object AnimeListFragment : BaseFragment() {
         initFindBar(view)
         initList(view)
 
-        getAnimeList(1, 15, null, null, null, null, null, null, null, null)
+        getAnimeList(page, order, kind, status, season, rating, genre, myList, search)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
+        super.onCreate(savedInstanceState)
     }
 
     /**
@@ -57,11 +82,28 @@ object AnimeListFragment : BaseFragment() {
         mSearchingBar = SearchingBar(activity, rootView)
     }
 
-    /**
-     * Метод инициализирует меню для поиска по названию
-     */
-    private fun initSearchBar() {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_animelist_search, menu)
 
+        val item = menu.findItem(R.id.menu_activity_list_search)
+        val searchView = item.actionView as SearchView
+        searchView.queryHint = "Введите название аниме"
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(p0: String): Boolean {
+                onBackPressed()
+                // выполняем поисковой запрос
+                getAnimeList(1, null, null, null, null, null, null, null, p0)
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                // todo поиск в реальном времени. Скорее всего не понадобится
+                return false
+            }
+        })
+
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     /**
@@ -69,9 +111,11 @@ object AnimeListFragment : BaseFragment() {
      */
     private fun initList(rootView: View) {
         mRecyclerView = rootView.findViewById(R.id.animelist_fragment_recycler_view) as RecyclerView
-        mRecyclerView.layoutManager = LinearLayoutManager(activity)
+        //mRecyclerView.addItemDecoration()
+        settingRecyclerViewLayoutManager(mRecyclerView)
         mRecyclerView.adapter = mListAdapter
 
+        mAnimesManager = AnimesManager(activity.findViewById(R.id.activity_main_progress_bar) as ProgressBar)
         // переопределяем действие по окончанию загрузки
         mAnimesManager.setOnDownloadFinishListener(object: OnDownloadFinish {
             override fun onLoadSuccess(call: Call<*>, response: Response<*>) {
@@ -79,18 +123,19 @@ object AnimeListFragment : BaseFragment() {
                 if (call.request().url().toString().contains("page=1&")) {
                     mListAdapter.setItems(response.body() as MutableList<*>)
                     mRecyclerView.scrollToPosition(0)
+                    mListAdapter.notifyDataSetChanged()
                 } else {
                     mListAdapter.addItems(response.body() as MutableList<*>)
-                }
 
-                // обновляем адаптер с позиции добавленных элементов в список
-                mListAdapter.notifyItemRangeInserted(mListAdapter.getItemCount() - 15, mListAdapter.getItemCount());
+                    // обновляем адаптер с позиции добавленных элементов в список
+                    mListAdapter.notifyItemRangeInserted(
+                            mListAdapter.getItemCount() - (response.body() as MutableList<*>).size, mListAdapter.getItemCount());
+                }
             }
 
             override fun onLoadFailure(throwable: Throwable) {
                 // TODO
-                throwable.stackTrace
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                Log.e(TAG, throwable.message)
             }
         })
 
@@ -102,13 +147,33 @@ object AnimeListFragment : BaseFragment() {
     }
 
     /**
+     * Метод настраивает LayoutManager для RecyclerView под разные ориентации экрана
+     */
+    private fun settingRecyclerViewLayoutManager(recyclerView: RecyclerView) {
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+            recyclerView.layoutManager = LinearLayoutManager(activity)
+        else
+            recyclerView.layoutManager = GridLayoutManager(activity, 2)
+    }
+
+    /**
      * Метод получает список от менеджера и обновляет адаптер
      */
-    private fun getAnimeList(page: Int, limit: Int, order: String?, kind: String?, status: String?,
+    private fun getAnimeList(page: Int, order: String?, kind: String?, status: String?,
                              season: String?, rating: String?, genre: String?, myList: String?,
                              search: String?) {
 
-        mAnimesManager.getAnimesList(page, limit, order, kind, status, season, rating, genre,
+        this.page = page
+        this.order = order
+        this.kind = kind
+        this.status = status
+        this.season = season
+        this.rating = rating
+        this.genre = genre
+        this.myList = myList
+        this.search = search
+
+        mAnimesManager.getAnimesList(page, order, kind, status, season, rating, genre,
                 myList, search
         )
     }

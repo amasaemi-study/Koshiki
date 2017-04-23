@@ -98,6 +98,7 @@ class AnimeListCardview(val mContext: Context, rootView: View) {
                 .load(posterUrl)
                 .error(R.drawable.img_load_failed)
                 .dontAnimate()
+                .centerCrop()
                 .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .into(animePoster);

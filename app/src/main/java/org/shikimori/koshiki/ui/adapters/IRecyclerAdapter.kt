@@ -1,7 +1,5 @@
 package org.shikimori.koshiki.ui.adapters
 
-import org.shikimori.koshiki.data.network.models.adapted._AnimeListModel
-
 /**
  * Created by Александр on 18.04.2017.
  */

@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import org.shikimori.koshiki.R
-import org.shikimori.koshiki.data.network.models.adapted._AnimeListModel
 import org.shikimori.koshiki.data.network.models.pojo.AnimeListPojo
 import org.shikimori.koshiki.ui.adapters.AnimeListAdapter.AnimeViewHolder
 import org.shikimori.koshiki.ui.adapters.interfaces.OnEndListListener
@@ -62,13 +61,14 @@ class AnimeListAdapter(context: Context) : RecyclerView.Adapter<AnimeViewHolder>
     override fun getItemCount() = mList.size
 
     override fun setItems(items: MutableList<*>) {
-        // приводим items к mutableListModel
-        mList.addAll(items as MutableList<AnimeListPojo>)
+        // приводим items к ArrayList
+        mList.clear()
+        mList.addAll(items as ArrayList<AnimeListPojo>)
         mEndListChecker = true
     }
 
     override fun addItems(items: MutableList<*>) {
-        mList.addAll(mList.size, items as MutableList<AnimeListPojo>)
+        mList.addAll(mList.size, items as ArrayList<AnimeListPojo>)
         if (mList.size != 0)
             mEndListChecker = true
     }
