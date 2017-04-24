@@ -1,5 +1,6 @@
 package org.shikimori.koshiki.data.network.managers
 
+import android.util.Log
 import org.shikimori.koshiki.application.KoshikiApplication
 import org.shikimori.koshiki.data.network.models.pojo.AnimeListPojo
 import org.shikimori.koshiki.ui.customviews.swiperefresh.SwipeRefreshLayout
@@ -13,6 +14,8 @@ import retrofit2.Response
  */
 
 class AnimesManager(val refresh: SwipeRefreshLayout?) {
+
+    private val TAG = "AnimesManager"
 
     lateinit private var listener: OnDownloadFinish
 
@@ -53,6 +56,8 @@ class AnimesManager(val refresh: SwipeRefreshLayout?) {
                 .enqueue(object: Callback<List<AnimeListPojo>> {
 
                     override fun onResponse(call: Call<List<AnimeListPojo>>, response: Response<List<AnimeListPojo>>) {
+                        responseLog(response)
+
                         if (response.body().isNotEmpty())
                             listener.onLoadSuccess(call, response)
                         else
@@ -62,6 +67,8 @@ class AnimesManager(val refresh: SwipeRefreshLayout?) {
                     }
 
                     override fun onFailure(call: Call<List<AnimeListPojo>>?, t: Throwable) {
+                        requestLog(call as Call<*>, t)
+
                         listener.onLoadFailure(t)
 
                         refresh?.isRefreshing = false
@@ -108,5 +115,27 @@ class AnimesManager(val refresh: SwipeRefreshLayout?) {
      */
     fun getAnimeScreenshots(animeId: Int) {
 
+    }
+
+    /**
+     * Метод логгирует ответ
+     */
+    fun responseLog(response: Response<*>) {
+        Log.i(TAG, "--- Response info ---")
+        Log.i(TAG, "status: ${response.code()}")
+        Log.i(TAG, "message: ${response.message()}")
+        Log.i(TAG, "url: ${response.raw().networkResponse().request().url()}")
+        Log.i(TAG, "error body: ${response.errorBody()}")
+        Log.i(TAG, "--- Response info end ---")
+    }
+
+    /**
+     * Метод логгирует запрос
+     */
+    fun requestLog(call: Call<*>, t: Throwable) {
+        Log.i(TAG, "--- Request info ---")
+        Log.i(TAG, "error message: ${t.message}")
+        Log.i(TAG, "url: ${call.request().url()}}")
+        Log.i(TAG, "--- Request info end ---")
     }
 }

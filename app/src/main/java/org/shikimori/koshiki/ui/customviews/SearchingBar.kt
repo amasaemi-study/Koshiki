@@ -21,26 +21,19 @@ class SearchingBar(val context: Context, rootView: View) : View.OnClickListener 
 
     private val vSearchingControlLayout = rootView.findViewById(R.id.animelist_parameters_find_container_control_layout)
     private val vSearchingStatus = rootView.findViewById(R.id.animelist_parameters_find_searching_status) as TextView
-        private val selectStatusDialog by lazy { MoreSelectedDialog(context, R.array.status,
-                context.getString(R.string.animelist_finding_paramaters_status)) }
+        private var selectStatusDialog: MoreSelectedDialog? = null
     private val vSearchingKind = rootView.findViewById(R.id.animelist_parameters_find_searching_kind) as TextView
-        private val selectKindDialog by lazy { MoreSelectedDialog(context, R.array.kind,
-                context.getString(R.string.animelist_finding_paramaters_kind)) }
+        private var selectKindDialog: MoreSelectedDialog? = null
     private val vSearchingAgeRating = rootView.findViewById(R.id.animelist_parameters_find_searching_age_rating) as TextView
-        private val selectAgeRatingDialog by lazy { MoreSelectedDialog(context, R.array.rating,
-                context.getString(R.string.animelist_finding_paramaters_age_rating)) }
+        private var selectAgeRatingDialog: MoreSelectedDialog? = null
     private val vSearchingSeason = rootView.findViewById(R.id.animelist_parameters_find_searching_season) as TextView
-        private val selectSeasonDialog by lazy { MoreSelectedDialog(context, R.array.season,
-                context.getString(R.string.animelist_finding_paramaters_season)) }
+        private var selectSeasonDialog: MoreSelectedDialog? = null
     private val vSearchingMyList = rootView.findViewById(R.id.animelist_parameters_find_searching_my_list) as TextView
-        private val selectMyListDialog by lazy { MoreSelectedDialog(context, R.array.mylist,
-                context.getString(R.string.animelist_finding_paramaters_stat_my_list)) }
+        private var selectMyListDialog: MoreSelectedDialog? = null
     private val vSearchingGenres = rootView.findViewById(R.id.animelist_parameters_find_searching_genres) as TextView
-        private val selectGenresDialog by lazy { MoreSelectedDialog(context, R.array.genres,
-                context.getString(R.string.animelist_finding_paramaters_genres)) }
+        private var selectGenresDialog: MoreSelectedDialog? = null
     private val vSearchingSort = rootView.findViewById(R.id.animelist_parameters_find_searching_order) as TextView
-        private val selectSortDialog by lazy { SingleSelectedDialog(context, R.array.order,
-                context.getString(R.string.animelist_finding_paramaters_order)) }
+        private var selectSortDialog: SingleSelectedDialog? = null
     private val vSearchingSearch = rootView.findViewById(R.id.animelist_parameters_find_searching_search)
     private val vSearchingSubstrate = rootView.findViewById(R.id.animelist_parameters_find_substrate)
     private val openParametersItem = rootView.findViewById(R.id.animelist_fragment_open_layout)
@@ -112,91 +105,147 @@ class SearchingBar(val context: Context, rootView: View) : View.OnClickListener 
     }
 
     fun showStatusDialog() {
-        selectStatusDialog.setOnCloseDialogListener(object: OnCloseDialogListener {
-            override fun onCloseDialog(selectedItems: Any) {
-                if ((selectedItems as IntArray).isNotEmpty())
-                    vSearchingStatus.text = ValueParser.getStatusSelected(false, selectedItems)
-                else
-                    vSearchingStatus.text = context.getString(R.string.animelist_finding_paramaters_status)
-            }
-        })
+        if (selectStatusDialog == null) {
+            selectStatusDialog = MoreSelectedDialog(context, R.array.status,
+                    context.getString(R.string.animelist_finding_paramaters_status))
+            selectStatusDialog?.setOnCloseDialogListener(object: OnCloseDialogListener {
+                override fun onCloseDialog(selectedItems: Any) {
+                    if ((selectedItems as IntArray).isNotEmpty())
+                        vSearchingStatus.text = ValueParser.getStatusSelected(false, selectedItems)
+                    else
+                        vSearchingStatus.text = context.getString(R.string.animelist_finding_paramaters_status)
+                }
+            })
+        }
 
-        selectStatusDialog.show()
+        selectStatusDialog?.show()
+    }
+
+    fun getSelectedStatus(): String? {
+        return ValueParser.getStatusSelected(true, selectStatusDialog?.getSelectedElements())
     }
 
     fun showKindDialog() {
-        selectKindDialog.setOnCloseDialogListener(object: OnCloseDialogListener {
-            override fun onCloseDialog(selectedItems: Any) {
-                if ((selectedItems as IntArray).isNotEmpty())
-                    vSearchingKind.text = ValueParser.getKindSelected(false, selectedItems)
-                else
-                    vSearchingKind.text = context.getString(R.string.animelist_finding_paramaters_kind)
-            }
-        })
+        if (selectKindDialog == null) {
+            selectKindDialog = MoreSelectedDialog(context, R.array.kind,
+                    context.getString(R.string.animelist_finding_paramaters_kind))
+            selectKindDialog?.setOnCloseDialogListener(object: OnCloseDialogListener {
+                override fun onCloseDialog(selectedItems: Any) {
+                    if ((selectedItems as IntArray).isNotEmpty())
+                        vSearchingKind.text = ValueParser.getKindSelected(false, selectedItems)
+                    else
+                        vSearchingKind.text = context.getString(R.string.animelist_finding_paramaters_kind)
+                }
+            })
+        }
 
-        selectKindDialog.show()
+        selectKindDialog?.show()
+    }
+
+    fun getSelectedKind(): String? {
+        return ValueParser.getKindSelected(true, selectKindDialog?.getSelectedElements())
     }
 
     fun showAgeRatingDialog() {
-        selectAgeRatingDialog.setOnCloseDialogListener(object: OnCloseDialogListener {
-            override fun onCloseDialog(selectedItems: Any) {
-                if ((selectedItems as IntArray).isNotEmpty())
-                    vSearchingAgeRating.text = ValueParser.getRatingSelected(false, selectedItems)
-                else
-                    vSearchingAgeRating.text = context.getString(R.string.animelist_finding_paramaters_age_rating)
-            }
-        })
+        if (selectAgeRatingDialog == null) {
+            selectAgeRatingDialog = MoreSelectedDialog(context, R.array.rating,
+                    context.getString(R.string.animelist_finding_paramaters_age_rating))
+            selectAgeRatingDialog?.setOnCloseDialogListener(object: OnCloseDialogListener {
+                override fun onCloseDialog(selectedItems: Any) {
+                    if ((selectedItems as IntArray).isNotEmpty())
+                        vSearchingAgeRating.text = ValueParser.getRatingSelected(false, selectedItems)
+                    else
+                        vSearchingAgeRating.text = context.getString(R.string.animelist_finding_paramaters_age_rating)
+                }
+            })
+        }
 
-        selectAgeRatingDialog.show()
+        selectAgeRatingDialog?.show()
+    }
+
+    fun getSelectedAgeRating(): String? {
+        return ValueParser.getRatingSelected(true, selectAgeRatingDialog?.getSelectedElements())
     }
 
     fun showSeasonDialog() {
-        selectSeasonDialog.setOnCloseDialogListener(object: OnCloseDialogListener {
-            override fun onCloseDialog(selectedItems: Any) {
-                if ((selectedItems as IntArray).isNotEmpty())
-                    vSearchingSeason.text = ValueParser.getSeasonSelected(false, selectedItems)
-                else
-                    vSearchingSeason.text = context.getString(R.string.animelist_finding_paramaters_season)
-            }
-        })
+        if (selectSeasonDialog == null) {
+            selectSeasonDialog = MoreSelectedDialog(context, R.array.season,
+                    context.getString(R.string.animelist_finding_paramaters_season))
+            selectSeasonDialog?.setOnCloseDialogListener(object: OnCloseDialogListener {
+                override fun onCloseDialog(selectedItems: Any) {
+                    if ((selectedItems as IntArray).isNotEmpty())
+                        vSearchingSeason.text = ValueParser.getSeasonSelected(false, selectedItems)
+                    else
+                        vSearchingSeason.text = context.getString(R.string.animelist_finding_paramaters_season)
+                }
+            })
+        }
 
-        selectSeasonDialog.show()
+        selectSeasonDialog?.show()
+    }
+
+    fun getSelectedSeason(): String? {
+        return ValueParser.getSeasonSelected(true, selectSeasonDialog?.getSelectedElements())
     }
 
     fun showMyListDialog() {
-        selectMyListDialog.setOnCloseDialogListener(object: OnCloseDialogListener {
-            override fun onCloseDialog(selectedItems: Any) {
-                if ((selectedItems as IntArray).isNotEmpty())
-                    vSearchingMyList.text = ValueParser.getMyListSelected(false, selectedItems)
-                else
-                    vSearchingMyList.text = context.getString(R.string.animelist_finding_paramaters_stat_my_list)
-            }
-        })
+        if (selectMyListDialog == null) {
+            selectMyListDialog = MoreSelectedDialog(context, R.array.mylist,
+                    context.getString(R.string.animelist_finding_paramaters_stat_my_list))
+            selectMyListDialog?.setOnCloseDialogListener(object: OnCloseDialogListener {
+                override fun onCloseDialog(selectedItems: Any) {
+                    if ((selectedItems as IntArray).isNotEmpty())
+                        vSearchingMyList.text = ValueParser.getMyListSelected(false, selectedItems)
+                    else
+                        vSearchingMyList.text = context.getString(R.string.animelist_finding_paramaters_stat_my_list)
+                }
+            })
+        }
 
-        selectMyListDialog.show()
+        selectMyListDialog?.show()
+    }
+
+    fun getSelectedMyList(): String? {
+        return ValueParser.getMyListSelected(true, selectMyListDialog?.getSelectedElements())
     }
 
     fun showGenresDialog() {
-        selectGenresDialog.setOnCloseDialogListener(object: OnCloseDialogListener {
-            override fun onCloseDialog(selectedItems: Any) {
-                if ((selectedItems as IntArray).isNotEmpty())
-                    vSearchingGenres.text = ValueParser.getGenresSelected(false, selectedItems)
-                else
-                    vSearchingGenres.text = context.getString(R.string.animelist_finding_paramaters_genres)
-            }
-        })
+        if (selectGenresDialog == null) {
+            selectGenresDialog = MoreSelectedDialog(context, R.array.genres,
+                    context.getString(R.string.animelist_finding_paramaters_genres))
+            selectGenresDialog?.setOnCloseDialogListener(object: OnCloseDialogListener {
+                override fun onCloseDialog(selectedItems: Any) {
+                    if ((selectedItems as IntArray).isNotEmpty())
+                        vSearchingGenres.text = ValueParser.getGenresSelected(false, selectedItems)
+                    else
+                        vSearchingGenres.text = context.getString(R.string.animelist_finding_paramaters_genres)
+                }
+            })
+        }
 
-        selectGenresDialog.show()
+        selectGenresDialog?.show()
+    }
+
+    fun getSelectedGenres(): String? {
+        return ValueParser.getGenresSelected(true, selectGenresDialog?.getSelectedElements())
     }
 
     fun showSortDialog() {
-        selectSortDialog.setOnCloseDialogListener(object: OnCloseDialogListener {
-            override fun onCloseDialog(selectedItems: Any) {
-                vSearchingSort.text = ValueParser.getOrderSelected(false, selectedItems as Int)
-            }
-        })
+        if (selectSortDialog == null) {
+            selectSortDialog = SingleSelectedDialog(context, R.array.order,
+                    context.getString(R.string.animelist_finding_paramaters_order))
+            selectSortDialog?.setOnCloseDialogListener(object: OnCloseDialogListener {
+                override fun onCloseDialog(selectedItems: Any) {
+                    vSearchingSort.text = ValueParser.getOrderSelected(false, selectedItems as Int)
+                }
+            })
+        }
 
-        selectSortDialog.show()
+        selectSortDialog?.show()
+    }
+
+    fun getSelectedSort(): String? {
+        return ValueParser.getOrderSelected(true, selectSortDialog?.getSelectedElements())
     }
 
     /**
@@ -323,6 +372,13 @@ class SearchingBar(val context: Context, rootView: View) : View.OnClickListener 
         vSearchingGenres.text = context.getString(R.string.animelist_finding_paramaters_genres)
         vSearchingSort.text = context.getString(R.string.animelist_finding_paramaters_order)
 
-        // TODO обнулить диалоги. Инициализировать диалоги в месте вызова
+        // TODO подумать над более рациональным использованием памяти диалогов
+        selectStatusDialog = null
+        selectKindDialog = null
+        selectAgeRatingDialog = null
+        selectSeasonDialog = null
+        selectMyListDialog = null
+        selectGenresDialog = null
+        selectSortDialog = null
     }
 }

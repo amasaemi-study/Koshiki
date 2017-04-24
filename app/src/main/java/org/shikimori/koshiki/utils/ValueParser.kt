@@ -70,7 +70,7 @@ object ValueParser {
     }
 
     fun getStatusSelected(requestParam: Boolean, status: IntArray?): String? {
-        if (status == null)
+        if ((status == null) || (status.isEmpty()))
             return null
         else {
             var values: String = ""
@@ -98,7 +98,7 @@ object ValueParser {
     }
 
     fun getKindSelected(requestParam: Boolean, kind: IntArray?): String? {
-        if (kind == null)
+        if ((kind == null) || (kind.isEmpty()))
             return null
         else {
             var values: String = ""
@@ -132,7 +132,7 @@ object ValueParser {
     }
 
     fun getRatingSelected(requestParam: Boolean, rating: IntArray?): String? {
-        if (rating == null)
+        if ((rating == null) || (rating.isEmpty()))
             return null
         else {
             var values: String = ""
@@ -166,7 +166,7 @@ object ValueParser {
     }
 
     fun getSeasonSelected(requestParam: Boolean, season: IntArray?): String? {
-        if (season == null)
+        if ((season == null) || (season.isEmpty()))
             return null
         else {
             var values: String = ""
@@ -212,7 +212,7 @@ object ValueParser {
     }
 
     fun getMyListSelected(requestParam: Boolean, myList: IntArray?): String? {
-        if (myList == null)
+        if ((myList == null) || (myList.isEmpty()))
             return null
         else {
             var values: String = ""
@@ -246,18 +246,18 @@ object ValueParser {
     }
 
     fun getGenresSelected(requestParam: Boolean, genres: IntArray?): String? {
-        if (genres == null)
+        if ((genres == null) || (genres.isEmpty()))
             return null
         else {
             var values: String = ""
 
             if (requestParam) {
-                for (i in genres) {
-                    values += "${i.toString()},"
+                for (i in genres ) {
+                    values += "${(i + 1).toString()},"
                 }
             } else {
                 for (i in genres) {
-                    when (i) {
+                    when (i + 1) {
                         1 -> values += " Экшен,"
                         2 -> values += " Приключения,"
                         3 -> values += " Машины,"
@@ -309,7 +309,7 @@ object ValueParser {
         }
     }
 
-    fun getOrderSelected(requestParam: Boolean, order: Int): String {
+    fun getOrderSelected(requestParam: Boolean, order: Int?): String {
         if (requestParam) {
             when(order) {
                 0 -> return "random"
@@ -318,6 +318,8 @@ object ValueParser {
                 3 -> return "name"
                 4 -> return "aired_on"
                 5 -> return "status"
+
+                else -> return "random"
             }
         } else {
             when(order) {
@@ -327,8 +329,9 @@ object ValueParser {
                 3 -> return "По алфавиту"
                 4 -> return "По дате выхода"
                 5 -> return "По статуса"
+
+                else -> return "Случайно"
             }
         }
-        return "popularity"
     }
 }

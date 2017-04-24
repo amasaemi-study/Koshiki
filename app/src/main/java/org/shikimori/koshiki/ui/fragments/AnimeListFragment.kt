@@ -81,6 +81,15 @@ class AnimeListFragment : BaseFragment() {
      */
     private fun initFindBar(rootView: View) {
         mSearchingBar = SearchingBar(activity, rootView)
+
+        mSearchingBar.setOnFindLogic(object: SearchingBar.OnFindListener {
+            override fun onFind() {
+                getAnimeList(1, mSearchingBar.getSelectedSort(),
+                        mSearchingBar.getSelectedKind(), mSearchingBar.getSelectedStatus(),
+                        mSearchingBar.getSelectedSeason(), mSearchingBar.getSelectedAgeRating(),
+                        mSearchingBar.getSelectedGenres(), mSearchingBar.getSelectedMyList(), null)
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
